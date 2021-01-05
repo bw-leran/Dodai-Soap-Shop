@@ -1,2 +1,2 @@
-# Dodai-Soap-Shop
+# Dodai Soap Shop
 Soap Ecommerce Website!
