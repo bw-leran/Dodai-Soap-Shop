@@ -1,0 +1,110 @@
+
+<!-- FUTURE BRANDON! Be sure to include link to icons8.com at bottom of page for each page their icons were used -->
+
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+    <title>Dodai's Soap Shop</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1" />
+
+    <script type="text/javascript">
+        var user = '{{ request.user }}'
+
+        function getToken(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                var cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    var cookie = cookies[i].trim();
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        var csrftoken = getToken('csrftoken');
+
+        function getCookie(name) {
+            var cookieArr = document.cookie.split(";");
+
+            for(var i=0;i<cookieArr.length;i++) {
+                var cookiePair = cookieArr[i].split("=");
+
+                if(name == cookiePair[0].trim()) {
+                    return decodeURIComponent(cookiePair[1]);
+                }
+            }
+
+            return null;
+        }
+        var cart = JSON.parse(getCookie('cart'))
+
+        if(cart == undefined) {
+            cart = {}
+            console.log('Cart was created!')
+            document.cookie = 'cart=' + JSON.stringify(cart)
+        }
+
+        console.log('Cart:',cart)
+    </script>
+
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <a class="navbar-brand" href={% url 'store' %}>Dodai's Soap Shop</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href={% url 'store' %}>Shop<span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href={% url 'about' %}>About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Login</a>
+          </li>
+        </ul>
+
+          <div class="form-inline my-2 my-lg-0">
+
+	     	<a href="{% url 'cart' %}">
+	    		<svg xmlns="http://www.w3.org/2000/svg" width="40" height="30" fill="#ffffff " class="bi bi-cart2" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5zM3.14 5l1.25 5h8.22l1.25-5H3.14zM5 13a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0zm9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0z"/>
+                </svg>
+	    	</a>
+
+	    	<p id="cart-total">{{cartItems}}</p>
+
+	    </div>
+
+      </div>
+</nav>
+
+    <div class="container">
+        {% block content %}
+
+        {% endblock content %}
+    </div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+<script type="text/javascript" src="{% static 'js/cart.js' %}"></script>
+
+</body>
+</html>
