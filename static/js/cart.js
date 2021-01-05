@@ -8,7 +8,7 @@ for (i = 0; i < updateBtns.length; i++) {
 
         console.log('USER:',user)
         if (user == 'AnonymousUser') {
-            console.log('User is not authenticated')
+            addCookieItem(productId,action)
         }else{
             updateUserOrder(productId,action)
         }
@@ -16,8 +16,31 @@ for (i = 0; i < updateBtns.length; i++) {
     })
 }
 
+function addCookieItem(productId, action) {
+    console.log('User not authenticated')
+
+    if (action == 'add') {
+        if (cart[productId] == undefined) {
+            cart[productId] = {'quantity':1}
+        } else {
+            cart[productId]['quantity'] += 1
+        }
+    }
+    if (action == 'remove') {
+        cart[productId]['quantity'] -= 1
+
+        if (cart[productId]['quantity'] <= 0) {
+            console.log('Item removed')
+            delete cart[productId];
+        }
+    }
+    document.cookie = 'cart=' + JSON.stringify(cart) + ";domain=;path=/"
+    console.log('Cart:',cart)
+    location.reload()
+}
+
 function updateUserOrder(productId,action){
-    console.log('User is authenticated, sending data')
+    console.log('User authenticated, sending data')
 
     var url = '/update_item/'
 
