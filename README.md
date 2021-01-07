@@ -1,4 +1,6 @@
 # Dodai Soap Shop
 Soap Ecommerce Website!
 
-<img src="website1.png"/>
+![](static/images/website1.png)
+![](static/images/website2.png)
+![](static/images/website3.png)
