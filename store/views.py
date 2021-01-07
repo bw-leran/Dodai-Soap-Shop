@@ -24,6 +24,15 @@ def cart(request):
     context = {'items':items,'order':order,'cartItems':cartItems}
     return render(request,'store/cart.html',context)
 
+def view(request):
+    data = cartData(request)
+
+    cartItems = data['cartItems']
+    items = data['items']
+
+    context = {'items':items,'cartItems':cartItems}
+    return render(request,'store/view.html',context)
+
 def checkout(request):
     data = cartData(request)
 
