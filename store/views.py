@@ -24,13 +24,20 @@ def cart(request):
     context = {'items':items,'order':order,'cartItems':cartItems}
     return render(request,'store/cart.html',context)
 
-def view(request):
+def view(request): #add prodId if need
     data = cartData(request)
 
     cartItems = data['cartItems']
     items = data['items']
 
     context = {'items':items,'cartItems':cartItems}
+
+    '''
+    prod = request.POST.get('prod', None)
+    context['prod'] = prod
+    print(prod)
+    '''
+
     return render(request,'store/view.html',context)
 
 def checkout(request):
@@ -42,6 +49,16 @@ def checkout(request):
 
     context = {'items': items, 'order': order,'cartItems':cartItems}
     return render(request,'store/checkout.html',context)
+
+def about(request):
+    data = cartData(request)
+
+    cartItems = data['cartItems']
+    items = data['items']
+
+    context = {'items': items, 'cartItems': cartItems}
+
+    return render(request, 'store/about.html', context)
 
 def updateItem(request):
     data = json.loads(request.body)
@@ -67,10 +84,6 @@ def updateItem(request):
         orderItem.delete()
 
     return JsonResponse('Item was added',safe=False)
-
-def about(request):
-    context = {}
-    return render(request,'store/about.html',context)
 
 def processOrder(request):
     transaction_id = datetime.datetime.now().timestamp()
